@@ -34,13 +34,13 @@ export default function EventPage() {
     return (
         <div className="relative">
             {/* <Navbar /> */}
-            <NavbarDemo/>
+            <NavbarDemo />
             <img
                 className="absolute top-0 opacity-10"
                 src="https://cdn.prod.website-files.com/669aeedffebb61f45e26347a/678eb7c9f8fcb0d17dbdaf48_ETHDEN2025_web_background_nopaper_header.webp"
                 alt="bg"
             />
-            <div className="min-h-screen bg-white text-black p-4 sm:p-8">
+            <div className="min-h-screen bg-white text-black p-4 sm:p-8 mt-28 md:mt-36">
                 <div className="max-w-4xl mx-auto">
                     <Link to={'/events'}>
                         <Button variant="ghost" className="mb-4 relative z-10">

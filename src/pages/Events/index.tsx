@@ -142,8 +142,8 @@ export default function EventsListing() {
                     
                     {/* Timeline Style Events List */}
                     <div className="relative px-2 sm:px-0">
-                        {/* Timeline line - visible only on desktop */}
-                        <div className="hidden sm:block absolute left-[124px] top-4 bottom-0 w-[2px] bg-gray-300"></div>
+                        {/* Timeline line - hidden on mobile, adjusted position */}
+                        <div className="hidden sm:block absolute left-[128px] top-4 bottom-0 w-[2px] bg-gray-300"></div>
                         
                         {/* Event Groups */}
                         <div className="space-y-8 sm:space-y-12">
@@ -154,7 +154,7 @@ export default function EventsListing() {
                                         <span className="text-lg sm:text-xl font-semibold">Today</span>
                                         <span className="text-gray-500 text-sm sm:text-base">Saturday</span>
                                     </div>
-                                    {/* Circle - visible only on desktop */}
+                                    {/* Circle - hidden on mobile */}
                                     <div className="hidden sm:block h-6 w-6 rounded-full bg-white border-4 border-gray-400 z-10"></div>
                                 </div>
 
@@ -213,7 +213,7 @@ export default function EventsListing() {
                                         <span className="text-lg sm:text-xl font-semibold">Feb 26</span>
                                         <span className="text-gray-500 text-sm sm:text-base">Wednesday</span>
                                     </div>
-                                    {/* Circle - visible only on desktop */}
+                                    {/* Circle - hidden on mobile */}
                                     <div className="hidden sm:block h-6 w-6 rounded-full bg-white border-4 border-gray-400 z-10"></div>
                                 </div>
                                 
@@ -265,7 +265,7 @@ export default function EventsListing() {
                                         <span className="text-lg sm:text-xl font-semibold">Mar 25</span>
                                         <span className="text-gray-500 text-sm sm:text-base">Tuesday</span>
                                     </div>
-                                    {/* Circle - visible only on desktop */}
+                                    {/* Circle - hidden on mobile */}
                                     <div className="hidden sm:block h-6 w-6 rounded-full bg-white border-4 border-gray-400 z-10"></div>
                                 </div>
                                 

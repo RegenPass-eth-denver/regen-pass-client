@@ -7,7 +7,7 @@ import VerticalLinearStepper from '../../components/stepper';
 import { Button } from '../../components/ui/button';
 import StarWarsButton from '../../components/ui/startwar-btn';
 import { events } from '../Events';
-
+import Navbar from '../../components/navbar/index';
 const getEventDetails = (id: string) => {
     return events.find((event) => event.slug === id);
 };

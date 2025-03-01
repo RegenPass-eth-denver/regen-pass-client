@@ -1,27 +1,28 @@
-'use client';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { cn } from '../../lib/utils';
-import { GoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
-import useGlobalStorage from '../../store';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { cn } from "../../lib/utils";
+import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+import useGlobalStorage from "../../store";
 import {
-    Address,
-    Avatar,
-    EthBalance,
-    Identity,
-    Name,
-} from '@coinbase/onchainkit/identity';
+  Address,
+  Avatar,
+  EthBalance,
+  Identity,
+  Name,
+} from "@coinbase/onchainkit/identity";
 import {
-    ConnectWallet,
-    Wallet,
-    WalletDropdown,
-    WalletDropdownBasename,
-    WalletDropdownDisconnect,
-    WalletDropdownFundLink,
-    WalletDropdownLink,
-} from '@coinbase/onchainkit/wallet';
+  ConnectWallet,
+  Wallet,
+  WalletDropdown,
+  WalletDropdownBasename,
+  WalletDropdownDisconnect,
+  WalletDropdownFundLink,
+  WalletDropdownLink,
+} from "@coinbase/onchainkit/wallet";
+
 const transition = {
     type: 'spring',
     mass: 0.5,
@@ -85,26 +86,23 @@ export const Menu = ({
     setActive: (item: string | null) => void;
     children: React.ReactNode;
 }) => {
-    const navigate = useNavigate();
-    return (
-        <nav
-            onMouseLeave={() => setActive(null)}
-            className="relative rounded-full border border-transparent bg-white/95 dark:bg-[#1a1a1a]/95 backdrop-blur-sm border-gray-200 dark:border-gray-800 shadow-xl flex items-center justify-between p-4 font-montserrat animate-glow-pulse"
-        >
-            <div
-                className="flex items-center justify-center relative z-10 cursor-pointer"
-                onClick={() => navigate('/')}
-            >
-                <img
-                    src="/logo.png"
-                    alt="RegenPass Logo"
-                    className="h-8 sm:h-20 w-auto object-contain"
-                />
-            </div>
+  return (
+    <nav
+      onMouseLeave={() => setActive(null)}
+      className="relative rounded-full border border-transparent bg-white/95 dark:bg-[#1a1a1a]/95 backdrop-blur-sm border-gray-200 dark:border-gray-800 shadow-lg flex items-center justify-between px-8 py-3 font-montserrat animate-glow-pulse"
+    >
+      <div className="flex items-center justify-center">
+        <img
+          src="/logo.png"
+          alt="RegenPass Logo"
+          className="h-10 w-auto object-contain my-auto"
+          style={{ display: "block", margin: "auto 0" }}
+        />
+      </div>
 
-            <div className="flex items-center">{children}</div>
-        </nav>
-    );
+      <div className="flex items-center space-x-8">{children}</div>
+    </nav>
+  );
 };
 
 export const ProductItem = ({
@@ -164,87 +162,75 @@ function Navbar({ className }: { className?: string }) {
     const navigate = useNavigate();
     const { setEmail, setName } = useGlobalStorage();
 
-    const handleGoogleLogin = async (credentialResponse: any) => {
-        const idToken = credentialResponse.credential;
-        const userInfo = await fetchUserDetails(idToken);
-        console.log(userInfo);
-        setEmail(userInfo.email);
-        setName(userInfo.given_name);
-        navigate('/events');
-    };
+  const handleGoogleLogin = async (credentialResponse: any) => {
+    const idToken = credentialResponse.credential;
+    const userInfo = await fetchUserDetails(idToken);
+    console.log(userInfo);
+    setEmail(userInfo.email);
+    setName(userInfo.given_name);
+    navigate("/events");
+  };
 
-    const fetchUserDetails = async (idToken: string) => {
-        try {
-            const response = await fetch(
-                `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idToken}`
-            );
-            const userData = await response.json();
-            return userData;
-        } catch (error) {
-            console.error('Error fetching user details:', error);
-            return null;
-        }
-    };
-    const { name } = useGlobalStorage();
-    return (
-        <div
-            className={cn(
-                'fixed top-6 sm:top-8 md:top-10 inset-x-0 max-w-[95%] sm:max-w-4xl mx-auto z-[100]',
-                className
-            )}
-        >
-            <Menu setActive={setActive}>
-                <div className="relative">
-                    {window.location.pathname === '/' ? (
-                        <button className="inline-flex h-10 sm:h-12 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-[#0847f7] bg-[length:200%_100%] px-6 sm:px-8 text-sm sm:text-base font-medium text-white transition-all duration-300 hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                            Get Started
-                            <div className="opacity-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
-                                <GoogleLogin
-                                    onSuccess={handleGoogleLogin}
-                                    theme="filled_black"
-                                    size="large"
-                                    shape="pill"
-                                    text="signin_with"
-                                    locale="en"
-                                    useOneTap
-                                />
-                            </div>
-                        </button>
-                    ) : (
-                        <div className="flex text-black items-center relative z-10">
-                            <Wallet className="pl-3">
-                                <ConnectWallet>
-                                    <Avatar className="h-6 w-6" />
-                                    <Name />
-                                </ConnectWallet>
-                                <WalletDropdown>
-                                    <Identity
-                                        className="px-4 pt-3 pb-2"
-                                        hasCopyAddressOnClick
-                                    >
-                                        <Avatar />
-                                        <Name />
-                                        <Address />
-                                        <EthBalance />
-                                    </Identity>
-                                    <WalletDropdownBasename />
-                                    <WalletDropdownLink
-                                        icon="wallet"
-                                        href="https://keys.coinbase.com"
-                                    >
-                                        Wallet
-                                    </WalletDropdownLink>
-                                    <WalletDropdownFundLink />
-                                    <WalletDropdownDisconnect />
-                                </WalletDropdown>
-                            </Wallet>{' '}
-                            <div className="text-black ml-4 font-semibold">
-                                Hi, {name}
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </Menu>
+  const fetchUserDetails = async (idToken: string) => {
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idToken}`
+      );
+      const userData = await response.json();
+      return userData;
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      return null;
+    }
+  };
+
+  return (
+    <div
+      className={cn("fixed top-10 inset-x-0 max-w-4xl mx-auto z-50", className)}
+    >
+      <Menu setActive={setActive}>
+        <div className="flex items-center space-x-4">
+          <div className="relative">
+            <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-8 font-medium text-slate-300 transition-all duration-300 hover:scale-105 hover:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+              Get Started
+              <div className="opacity-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
+                <GoogleLogin
+                  onSuccess={handleGoogleLogin}
+                  theme="filled_black"
+                  size="large"
+                  shape="pill"
+                />
+              </div>
+            </button>
+          </div>
+
+          <div className="relative z-10">
+            <Wallet>
+              <ConnectWallet>
+                <Avatar className="h-6 w-6" />
+                <Name />
+              </ConnectWallet>
+              <WalletDropdown>
+                <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
+                  <Avatar />
+                  <Name />
+                  <Address />
+                  <EthBalance />
+                </Identity>
+                <WalletDropdownBasename />
+                <WalletDropdownLink
+                  icon="wallet"
+                  href="https://keys.coinbase.com"
+                >
+                  Wallet
+                </WalletDropdownLink>
+                <WalletDropdownFundLink />
+                <WalletDropdownDisconnect />
+              </WalletDropdown>
+            </Wallet>
+          </div>
         </div>
-    );
+      </Menu>
+    </div>
+  );
 }

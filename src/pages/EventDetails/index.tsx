@@ -2,7 +2,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
 
-import Navbar from '../../components/navbar';
+import { NavbarDemo } from '../../components/navbar/navbar-menu';
 import VerticalLinearStepper from '../../components/stepper';
 import { Button } from '../../components/ui/button';
 import StarWarsButton from '../../components/ui/startwar-btn';
@@ -33,7 +33,8 @@ export default function EventPage() {
 
     return (
         <div className="relative">
-            <Navbar />
+            {/* <Navbar /> */}
+            <NavbarDemo/>
             <img
                 className="absolute top-0 opacity-10"
                 src="https://cdn.prod.website-files.com/669aeedffebb61f45e26347a/678eb7c9f8fcb0d17dbdaf48_ETHDEN2025_web_background_nopaper_header.webp"
